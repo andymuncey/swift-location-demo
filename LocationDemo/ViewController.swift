@@ -1,6 +1,22 @@
 import UIKit
 import CoreLocation
 
+extension UIView {
+    
+    /**
+     Rotate a view by specified degrees
+     
+     - parameter angle: angle in degrees
+     */
+    func rotate(angle: CGFloat) {
+        let radians = angle / 180.0 * CGFloat.pi
+        let rotation = CGAffineTransform.init(rotationAngle: angle)
+        self.transform = rotation
+    }
+    
+}
+
+
 class ViewController: UIViewController, CLLocationManagerDelegate {
     
     var locationManager : CLLocationManager!
@@ -15,26 +31,39 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var latLabel: UILabel!
     @IBOutlet weak var longLabel: UILabel!
     
+    @IBOutlet weak var directionView: UIView!
+    @IBOutlet weak var headingLabel: UILabel!
+    
+    var heading = 0.0
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //create a location manager instance
-        locationManager = CLLocationManager()
-        
-        //ask for user permission if neccessary
-        if CLLocationManager.authorizationStatus() == .notDetermined {
-            locationManager.requestWhenInUseAuthorization()
-        }
-        
-        //ensure that the location manager's delegate is the view controller
-        //(we also declare that this class implements CLLocationManagerDelegate)
-        locationManager.delegate = self
-        
-        //set accuracy
-        locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
+        configureLocationManager()
         
         //start updating location
         locationManager.startUpdatingLocation()
+        
+        //start updating heading
+        locationManager.stopUpdatingHeading()
+    }
+    
+    func configureLocationManager(){
+    //create a location manager instance
+    locationManager = CLLocationManager()
+    
+    //ask for user permission if neccessary
+    if CLLocationManager.authorizationStatus() == .notDetermined {
+    locationManager.requestWhenInUseAuthorization()
+    }
+    
+    //ensure that the location manager's delegate is the view controller
+    //(we also declare that this class implements CLLocationManagerDelegate)
+    locationManager.delegate = self
+    
+    //set accuracy
+    locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
     }
     
     
@@ -57,6 +86,23 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         chesterDistanceLabel.text = String(format: "%.1f miles away", distanceInMiles)
     }
     
+    
+ 
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
+        
+        headingLabel.text = "\(newHeading.trueHeading)"
+        
+        let difference = newHeading.trueHeading - heading
+        
+        heading = newHeading.trueHeading
+        
+        directionView.rotate(angle: CGFloat(difference))
+        
+    }
+    
+    
+    
     func reverseGeocode(){
         
         if let location = lastKnownLocation {
@@ -70,7 +116,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             }
         }
     }
-
+    
 }
 
 
