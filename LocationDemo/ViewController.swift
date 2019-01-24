@@ -10,7 +10,7 @@ extension UIView {
      */
     func rotate(angle: CGFloat) {
         let radians = angle / 180.0 * CGFloat.pi
-        let rotation = CGAffineTransform.init(rotationAngle: angle)
+        let rotation = CGAffineTransform.init(rotationAngle: radians)
         self.transform = rotation
     }
     
