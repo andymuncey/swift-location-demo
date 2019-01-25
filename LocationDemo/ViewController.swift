@@ -4,22 +4,16 @@ import CoreLocation
 class ViewController: UIViewController, CLLocationManagerDelegate {
     
     var locationManager : CLLocationManager!
-    
-    @IBAction func getAddressTapped(_ sender: Any) {
-        reverseGeocode()
-    }
-    @IBOutlet weak var addressTextView: UITextView!
     var lastKnownLocation : CLLocation?
-    
-    @IBOutlet weak var chesterDistanceLabel: UILabel!
-    @IBOutlet weak var latLabel: UILabel!
-    @IBOutlet weak var longLabel: UILabel!
-    
-    @IBOutlet weak var directionView: UIView!
-    @IBOutlet weak var headingLabel: UILabel!
-    
     var heading = 0.0
     
+    @IBOutlet weak var latLabel: UILabel!
+    @IBOutlet weak var longLabel: UILabel!
+    @IBOutlet weak var chesterDistanceLabel: UILabel!
+    @IBOutlet weak var addressTextView: UITextView!
+   
+    @IBOutlet weak var directionView: UIView!
+    @IBOutlet weak var headingLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,22 +28,25 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     func configureLocationManager(){
-    //create a location manager instance
-    locationManager = CLLocationManager()
-    
-    //ask for user permission if neccessary
-    if CLLocationManager.authorizationStatus() == .notDetermined {
-    locationManager.requestWhenInUseAuthorization()
+        //create a location manager instance
+        locationManager = CLLocationManager()
+        
+        //ask for user permission if neccessary
+        if CLLocationManager.authorizationStatus() == .notDetermined {
+            locationManager.requestWhenInUseAuthorization()
+        }
+        
+        //ensure that the location manager's delegate is this view controller
+        //(we also declare that this class implements CLLocationManagerDelegate)
+        locationManager.delegate = self
+        
+        //set accuracy
+        locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
     }
     
-    //ensure that the location manager's delegate is the view controller
-    //(we also declare that this class implements CLLocationManagerDelegate)
-    locationManager.delegate = self
-    
-    //set accuracy
-    locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
+    @IBAction func getAddressTapped(_ sender: Any) {
+        reverseGeocode()
     }
-    
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         //get the most recent location
@@ -70,32 +67,21 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         chesterDistanceLabel.text = String(format: "%.1f miles away", distanceInMiles)
     }
     
-    
- 
-    
     func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
-        
-        headingLabel.text = "\(newHeading.trueHeading)"
-        //let difference = newHeading.trueHeading - heading
-        heading = newHeading.trueHeading
-        directionView.rotate(angle: CGFloat(-heading))
-        
+        headingLabel.text = String(format: "%.0f°", newHeading.trueHeading)
+        directionView.rotate(degrees: CGFloat(-newHeading.trueHeading))
     }
     
     func reverseGeocode(){
-        
         if let location = lastKnownLocation {
             let geocoder = CLGeocoder()
             geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
-                if let places = placemarks {
-                    if let closest = places.first {
-                        self.addressTextView.text = closest.formattedAddress()
-                    }
+                if let closestPlace = placemarks?.first {
+                    self.addressTextView.text = closestPlace.formattedAddress()
                 }
             }
         }
     }
-    
 }
 
 
