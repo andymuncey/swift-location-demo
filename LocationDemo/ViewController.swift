@@ -30,7 +30,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         locationManager.startUpdatingLocation()
         
         //start updating heading
-        locationManager.stopUpdatingHeading()
+        locationManager.startUpdatingHeading()
     }
     
     func configureLocationManager(){
