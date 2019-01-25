@@ -76,9 +76,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
         
         headingLabel.text = "\(newHeading.trueHeading)"
-        let difference = newHeading.trueHeading - heading
+        //let difference = newHeading.trueHeading - heading
         heading = newHeading.trueHeading
-        directionView.rotate(angle: CGFloat(difference))
+        directionView.rotate(angle: CGFloat(-heading))
         
     }
     
