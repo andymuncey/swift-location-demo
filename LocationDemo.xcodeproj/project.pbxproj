@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BBBC48AA21FA28F500D9B5C3 /* UIView+Rotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBC48A921FA28F400D9B5C3 /* UIView+Rotation.swift */; };
 		BBE300E721F5315800CF6D96 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE300E621F5315800CF6D96 /* AppDelegate.swift */; };
 		BBE300E921F5315800CF6D96 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE300E821F5315800CF6D96 /* ViewController.swift */; };
 		BBE300EC21F5315800CF6D96 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BBE300EA21F5315800CF6D96 /* Main.storyboard */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BBBC48A921FA28F400D9B5C3 /* UIView+Rotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Rotation.swift"; sourceTree = "<group>"; };
 		BBE300E321F5315800CF6D96 /* LocationDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LocationDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBE300E621F5315800CF6D96 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BBE300E821F5315800CF6D96 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -63,6 +65,7 @@
 				BBE300EF21F5315900CF6D96 /* LaunchScreen.storyboard */,
 				BBE300F221F5315900CF6D96 /* Info.plist */,
 				BBE4C2DF21F53BF2009A6814 /* CLPlacemark+Address.swift */,
+				BBBC48A921FA28F400D9B5C3 /* UIView+Rotation.swift */,
 			);
 			path = LocationDemo;
 			sourceTree = "<group>";
@@ -138,6 +141,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BBBC48AA21FA28F500D9B5C3 /* UIView+Rotation.swift in Sources */,
 				BBE300E921F5315800CF6D96 /* ViewController.swift in Sources */,
 				BBE4C2E021F53BF2009A6814 /* CLPlacemark+Address.swift in Sources */,
 				BBE300E721F5315800CF6D96 /* AppDelegate.swift in Sources */,

@@ -1,21 +1,6 @@
 import UIKit
 import CoreLocation
 
-extension UIView {
-    
-    /**
-     Rotate a view by specified degrees
-     Lifted from https://stackoverflow.com/questions/21370728/rotate-uiview-around-its-center-keeping-its-size#answer-35656911
-     - parameter angle: angle in degrees
-     */
-    func rotate(angle: CGFloat) {
-        let radians = angle / 180.0 * CGFloat.pi
-        let rotation = CGAffineTransform.init(rotationAngle: radians)
-        self.transform = rotation
-    }
-}
-
-
 class ViewController: UIViewController, CLLocationManagerDelegate {
     
     var locationManager : CLLocationManager!
@@ -91,16 +76,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
         
         headingLabel.text = "\(newHeading.trueHeading)"
-        
         let difference = newHeading.trueHeading - heading
-        
         heading = newHeading.trueHeading
-        
         directionView.rotate(angle: CGFloat(difference))
         
     }
-    
-    
     
     func reverseGeocode(){
         
